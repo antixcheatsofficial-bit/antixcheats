@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTI X CHEATS</title>
+    <style>
+        :root {
+            --primary-red: #ff0000;
+            --accent-red: #8b0000;
+            --bg-dark: #050505;
+            --glass: rgba(20, 20, 20, 0.85);
+            --font-main: 'Segoe UI', Impact, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-main);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* --- Particle Canvas --- */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- Content Layout --- */
+        .ui-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .logo-container img {
+            width: 180px;
+            filter: drop-shadow(0 0 15px var(--primary-red));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: 8px;
+            margin: 10px 0;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff, var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Tab System --- */
+        .tab-box {
+            width: 500px;
+            background: var(--glass);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .tab-nav {
+            display: flex;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #666;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+            font-size: 1.1rem;
+            min-height: 150px;
+            color: #ccc;
+        }
+
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+
+        /* --- Music Player --- */
+        .music-bar {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--glass);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--primary-red);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .play-btn {
+            background: var(--primary-red);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .volume-ctrl {
+            width: 80px;
+            accent-color: var(--primary-red);
+            cursor: pointer;
+        }
+
+        /* --- Animations --- */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary-red)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--primary-red)); }
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="ui-wrapper">
+        <div class="logo-container">
+            <img src="https://i.ibb.co.com/xqGzTzpZ/Adobe-Express-file.png" alt="AntiXCheats Logo">
+        </div>
+        <h1>ANTI X CHEATS</h1>
+
+        <div class="tab-box">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="showTab(event, 'home')">Home</button>
+                <button class="tab-btn" onclick="showTab(event, 'store')">Store</button>
+                <button class="tab-btn" onclick="showTab(event, 'about')">About Us</button>
+                <button class="tab-btn" onclick="showTab(event, 'contact')">Contact</button>
+            </div>
+
+            <div id="home" class="tab-content active">
+                <p>Dominate the arena with unseen precision. Our tools are built for those who refuse to lose.</p>
+            </div>
+            <div id="store" class="tab-content">
+                <p>Browse our elite collection. Secure, undetected, and lethal.</p>
+                <button style="margin-top:15px; padding: 8px 20px; background: red; color: white; border: none; cursor: pointer;">ENTER STORE</button>
+            </div>
+            <div id="about" class="tab-content">
+                <p>Forged in the shadows. We provide the edge you need to stay on top of the leaderboard.</p>
+            </div>
+            <div id="contact" class="tab-content">
+                <p>Join our Discord or reach out via Email for 24/7 VIP support.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="music-bar">
+        <button class="play-btn" id="playBtn">▶</button>
+        <span style="font-size: 0.7rem; letter-spacing: 1px; color: #888;">PLAYER</span>
+        <input type="range" class="volume-ctrl" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+        <audio id="audioSource" loop>
+            <source src="YOUR_MUSIC_LINK_HERE.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        // --- C# Particle Logic Ported to JS ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const particleCount = 100;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class TriangleParticle {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20; // Start off screen
+                this.targetY = canvas.height * 1.5;
+                this.size = Math.random() * 8;
+                this.speed = (1 + Math.random() * 25) / 15; // Adjusted speed scale for JS
+                this.rotation = 0;
+                this.rotSpeed = Math.random() * 0.05;
+                this.color = "rgb(255, 0, 0)";
+                this.glowColor = "rgba(255, 0, 0, 0.2)";
+            }
+
+            update() {
+                // Lerp logic from C# code
+                this.y += this.speed;
+                this.rotation += this.rotSpeed;
+
+                if (this.y > canvas.height) {
+                    this.init();
+                }
+            }
+
+            draw() {
+                // Glow effect (10 layers as per C#)
+                for (let i = 0; i < 5; i++) {
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255, 0, 0, ${0.1 - i * 0.02})`;
+                    ctx.arc(this.x, this.y, this.size + i * 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Triangle shape
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.beginPath();
+                ctx.moveTo(this.size * Math.cos(0), this.size * Math.sin(0));
+                ctx.lineTo(this.size * Math.cos(Math.PI * 2 / 3), this.size * Math.sin(Math.PI * 2 / 3));
+                ctx.lineTo(this.size * Math.cos(Math.PI * 4 / 3), this.size * Math.sin(Math.PI * 4 / 3));
+                ctx.closePath();
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new TriangleParticle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- Tabs Functionality ---
+        function showTab(evt, tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            contents.forEach(c => c.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // --- Music System ---
+        const audio = document.getElementById('audioSource');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        playBtn.onclick = () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerText = 'II';
+            } else {
+                audio.pause();
+                playBtn.innerText = '▶';
+            }
+        };
+
+        volumeSlider.oninput = (e) => {
+            audio.volume = e.target.value;
+        };
+    </script>
+</body>
+</html>
