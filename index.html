@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANTI X CHEATS</title>
+    <title>ANTI X CHEATS - Next-Gen Security</title>
     <style>
-        :root {
-            --primary-red: #ff0000;
-            --accent-red: #8b0000;
-            --bg-dark: #050505;
-            --glass: rgba(20, 20, 20, 0.85);
-            --font-main: 'Segoe UI', Impact, sans-serif;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -20,291 +12,1126 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: var(--font-main);
-            overflow: hidden;
-            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* --- Particle Canvas --- */
-        #particleCanvas {
+        /* Background Effects */
+        .bg-glow-1 {
+            position: fixed;
+            top: -10%;
+            left: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(153, 27, 27, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(128, 128, 128, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(128, 128, 128, 0.1) 1px, transparent 1px);
+            background-size: 64px 64px;
+            z-index: 0;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(220, 38, 38, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            right: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
         }
 
-        /* --- Content Layout --- */
-        .ui-wrapper {
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: #ef4444;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #d1d5db;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #dc2626, #991b1b);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
             position: relative;
             z-index: 10;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            animation: scaleRotate 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .hero-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(220, 38, 38, 0.5);
+            border-radius: 30px;
+            filter: blur(40px);
+            animation: pulse-scale 3s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #ffffff, #fecaca, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #ef4444;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.7s backwards;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: scaleIn 0.5s ease-out backwards;
+        }
+
+        .badge:nth-child(1) { animation-delay: 0.9s; }
+        .badge:nth-child(2) { animation-delay: 1s; }
+        .badge:nth-child(3) { animation-delay: 1.1s; }
+
+        .badge:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+        }
+
+        .badge-icon {
+            width: 20px;
+            height: 20px;
+            color: #ef4444;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeIn 1s ease-out 1.2s backwards;
+        }
+
+        .scroll-mouse {
+            width: 24px;
+            height: 40px;
+            border: 2px solid rgba(220, 38, 38, 0.5);
+            border-radius: 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 8px;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 2px;
+            animation: scroll-wheel 1.5s ease-in-out infinite;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 5rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .title-underline {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #dc2626, #991b1b);
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .card-glow {
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 20px;
+            opacity: 0.3;
+            filter: blur(10px);
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .card-glow {
+            opacity: 1;
+            animation: pulse-glow 1s ease-in-out infinite;
+        }
+
+        .card-content {
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+
+        .product-card:hover .card-content {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4);
+        }
+
+        .card-bg-particle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float-particle 10s ease-in-out infinite;
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.6s;
+        }
+
+        .product-card:hover .card-icon {
+            transform: rotate(360deg);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #d1d5db;
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: slideInLeft 0.4s ease-out forwards;
+        }
+
+        .product-card:nth-child(1) .card-features li:nth-child(1) { animation-delay: 0.2s; }
+        .product-card:nth-child(1) .card-features li:nth-child(2) { animation-delay: 0.3s; }
+        .product-card:nth-child(1) .card-features li:nth-child(3) { animation-delay: 0.4s; }
+        .product-card:nth-child(1) .card-features li:nth-child(4) { animation-delay: 0.5s; }
+
+        .feature-dot {
+            width: 6px;
+            height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .buy-button {
+            width: 100%;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s;
+        }
+
+        .buy-button:hover::before {
+            left: 100%;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.02);
+        }
+
+        .buy-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .modal-glow {
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 30px;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .modal-content {
+            position: relative;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            border-radius: 30px;
+            padding: 3rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .modal-close:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s backwards;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: #ef4444;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-method {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out forwards;
         }
 
-        .logo-container img {
-            width: 180px;
-            filter: drop-shadow(0 0 15px var(--primary-red));
-            animation: pulse 3s infinite ease-in-out;
+        .payment-method:nth-child(1) { animation-delay: 0.1s; background: linear-gradient(135deg, #db2777, #be185d); }
+        .payment-method:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, #ea580c, #c2410c); }
+        .payment-method:nth-child(3) { animation-delay: 0.3s; background: linear-gradient(135deg, #9333ea, #7e22ce); }
+        .payment-method:nth-child(4) { animation-delay: 0.4s; background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            letter-spacing: 8px;
-            margin: 10px 0;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff, var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .payment-method:hover::before {
+            left: 100%;
         }
 
-        /* --- Tab System --- */
-        .tab-box {
-            width: 500px;
-            background: var(--glass);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            border-radius: 8px;
-            margin-top: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        .payment-method:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.5);
         }
 
-        .tab-nav {
-            display: flex;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 8px 8px 0 0;
+        .payment-method svg {
+            width: 32px;
+            height: 32px;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
-            color: #666;
+        .payment-method span {
             font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            border-bottom: 2px solid transparent;
+            font-size: 1rem;
         }
 
-        .tab-btn.active {
-            color: var(--primary-red);
-            border-bottom: 2px solid var(--primary-red);
-            background: rgba(255, 0, 0, 0.05);
+        .modal-note {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
         }
 
-        .tab-content {
-            padding: 30px;
-            display: none;
-            font-size: 1.1rem;
-            min-height: 150px;
-            color: #ccc;
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
-        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
-
-        /* --- Music Player --- */
-        .music-bar {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--glass);
-            padding: 15px 25px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid var(--primary-red);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        footer p {
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
         }
 
-        .play-btn {
-            background: var(--primary-red);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
+        .footer-tagline {
+            color: #ef4444;
+            font-size: 0.9rem;
         }
 
-        .volume-ctrl {
-            width: 80px;
-            accent-color: var(--primary-red);
-            cursor: pointer;
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        /* --- Animations --- */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary-red)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--primary-red)); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes scaleRotate {
+            from {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+            }
+        }
+
+        @keyframes pulse-scale {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, 50px);
+            }
+            50% {
+                transform: translate(0, 100px);
+            }
+            75% {
+                transform: translate(-100px, 50px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes scroll-wheel {
+            0% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Background Effects -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="grid-background"></div>
 
-    <canvas id="particleCanvas"></canvas>
+    <!-- Floating Particles -->
+    <div id="particles"></div>
 
-    <div class="ui-wrapper">
-        <div class="logo-container">
-            <img src="https://i.ibb.co.com/xqGzTzpZ/Adobe-Express-file.png" alt="AntiXCheats Logo">
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>ANTI X CHEATS</h1>
+                    <p>NEXT-GEN SECURITY</p>
+                </div>
+            </div>
+            <nav>
+                <a href="#products">PRODUCTS</a>
+                <a href="#features">FEATURES</a>
+                <a href="#support">SUPPORT</a>
+            </nav>
         </div>
-        <h1>ANTI X CHEATS</h1>
+    </header>
 
-        <div class="tab-box">
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="showTab(event, 'home')">Home</button>
-                <button class="tab-btn" onclick="showTab(event, 'store')">Store</button>
-                <button class="tab-btn" onclick="showTab(event, 'about')">About Us</button>
-                <button class="tab-btn" onclick="showTab(event, 'contact')">Contact</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
             </div>
-
-            <div id="home" class="tab-content active">
-                <p>Dominate the arena with unseen precision. Our tools are built for those who refuse to lose.</p>
-            </div>
-            <div id="store" class="tab-content">
-                <p>Browse our elite collection. Secure, undetected, and lethal.</p>
-                <button style="margin-top:15px; padding: 8px 20px; background: red; color: white; border: none; cursor: pointer;">ENTER STORE</button>
-            </div>
-            <div id="about" class="tab-content">
-                <p>Forged in the shadows. We provide the edge you need to stay on top of the leaderboard.</p>
-            </div>
-            <div id="contact" class="tab-content">
-                <p>Join our Discord or reach out via Email for 24/7 VIP support.</p>
+            <h1>ANTI X CHEATS</h1>
+            <p>Next-Generation Gaming Security Solutions</p>
+            <div class="hero-badges">
+                <div class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>UNDETECTABLE</span>
+                </div>
+                <div class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span>REAL-TIME</span>
+                </div>
+                <div class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>SECURE</span>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
 
-    <div class="music-bar">
-        <button class="play-btn" id="playBtn">▶</button>
-        <span style="font-size: 0.7rem; letter-spacing: 1px; color: #888;">PLAYER</span>
-        <input type="range" class="volume-ctrl" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-        <audio id="audioSource" loop>
-            <source src="YOUR_MUSIC_LINK_HERE.mp3" type="audio/mpeg">
-        </audio>
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="section-title">
+            <h2>OUR PRODUCTS</h2>
+            <div class="title-underline"></div>
+        </div>
+        <div class="products-grid">
+            <!-- Product 1: External Prime -->
+            <div class="product-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-bg-particle"></div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">EXTERNAL PRIME</h3>
+                    <p class="card-description">Complete Arsenal</p>
+                    <ul class="card-features">
+                        <li><span class="feature-dot"></span> ALL FUNCTIONS</li>
+                        <li><span class="feature-dot"></span> Advanced Detection</li>
+                        <li><span class="feature-dot"></span> Auto Updates</li>
+                        <li><span class="feature-dot"></span> Premium Support</li>
+                    </ul>
+                    <button class="buy-button" onclick="openModal()">BUY NOW</button>
+                </div>
+            </div>
+
+            <!-- Product 2: Streamer Real -->
+            <div class="product-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-bg-particle"></div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">STREAMER REAL</h3>
+                    <p class="card-description">For Content Creators</p>
+                    <ul class="card-features">
+                        <li><span class="feature-dot"></span> AIMBOT AI (ON/OFF)</li>
+                        <li><span class="feature-dot"></span> AIMBOT HEAD (ON/OFF)</li>
+                        <li><span class="feature-dot"></span> AIMBOT DRAG (ON/OFF)</li>
+                        <li><span class="feature-dot"></span> AIMBOT LEGIT</li>
+                    </ul>
+                    <button class="buy-button" onclick="openModal()">BUY NOW</button>
+                </div>
+            </div>
+
+            <!-- Product 3: Streamer Unreal -->
+            <div class="product-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-bg-particle"></div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">STREAMER UNREAL</h3>
+                    <p class="card-description">Ultimate Streaming Power</p>
+                    <ul class="card-features">
+                        <li><span class="feature-dot"></span> ALL FUNCTIONS</li>
+                        <li><span class="feature-dot"></span> Stream Safe</li>
+                        <li><span class="feature-dot"></span> Zero Detection</li>
+                        <li><span class="feature-dot"></span> Elite Features</li>
+                    </ul>
+                    <button class="buy-button" onclick="openModal()">BUY NOW</button>
+                </div>
+            </div>
+
+            <!-- Product 4: UID Bypass -->
+            <div class="product-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-bg-particle"></div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">UID BYPASS</h3>
+                    <p class="card-description">Proxy Solution</p>
+                    <ul class="card-features">
+                        <li><span class="feature-dot"></span> Emulator Hide</li>
+                        <li><span class="feature-dot"></span> Remove Detection</li>
+                        <li><span class="feature-dot"></span> Proxy Based</li>
+                        <li><span class="feature-dot"></span> Not a Hack</li>
+                    </ul>
+                    <button class="buy-button" onclick="openModal()">BUY NOW</button>
+                </div>
+            </div>
+
+            <!-- Product 5: Emulator Bypass -->
+            <div class="product-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-bg-particle"></div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">EMULATOR BYPASS</h3>
+                    <p class="card-description">Advanced Hack Solution</p>
+                    <ul class="card-features">
+                        <li><span class="feature-dot"></span> Emulator Hide</li>
+                        <li><span class="feature-dot"></span> Remove Detection</li>
+                        <li><span class="feature-dot"></span> Hack Based</li>
+                        <li><span class="feature-dot"></span> Full Control</li>
+                    </ul>
+                    <button class="buy-button" onclick="openModal()">BUY NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 ANTI X CHEATS. All rights reserved.</p>
+        <p class="footer-tagline">NEXT-GEN SECURITY • UNDETECTABLE • SECURE</p>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-glow"></div>
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h2>SELECT PAYMENT</h2>
+                    <p>Choose your payment method</p>
+                </div>
+                <div class="payment-grid">
+                    <button class="payment-method">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        <span>bKash</span>
+                    </button>
+                    <button class="payment-method">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        <span>Nagad</span>
+                    </button>
+                    <button class="payment-method">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        <span>Rocket</span>
+                    </button>
+                    <button class="payment-method">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                        <span>Bank</span>
+                    </button>
+                </div>
+                <p class="modal-note">Secure payment gateway • 24/7 Support</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- C# Particle Logic Ported to JS ---
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        const particles = [];
-        const particleCount = 100;
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.top = Math.random() * window.innerHeight + 'px';
+                
+                const duration = 10 + Math.random() * 20;
+                const delay = Math.random() * 5;
+                
+                particle.style.animation = `floatParticle ${duration}s ${delay}s infinite ease-in-out`;
+                
+                particlesContainer.appendChild(particle);
+            }
         }
-        window.addEventListener('resize', resize);
-        resize();
 
-        class TriangleParticle {
-            constructor() {
-                this.init();
-            }
-
-            init() {
-                this.x = Math.random() * canvas.width;
-                this.y = -20; // Start off screen
-                this.targetY = canvas.height * 1.5;
-                this.size = Math.random() * 8;
-                this.speed = (1 + Math.random() * 25) / 15; // Adjusted speed scale for JS
-                this.rotation = 0;
-                this.rotSpeed = Math.random() * 0.05;
-                this.color = "rgb(255, 0, 0)";
-                this.glowColor = "rgba(255, 0, 0, 0.2)";
-            }
-
-            update() {
-                // Lerp logic from C# code
-                this.y += this.speed;
-                this.rotation += this.rotSpeed;
-
-                if (this.y > canvas.height) {
-                    this.init();
+        // Add custom particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatParticle {
+                0%, 100% {
+                    transform: translate(0, 0);
+                    opacity: 0.3;
+                }
+                25% {
+                    transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px);
+                    opacity: 0.6;
+                }
+                50% {
+                    transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px);
+                    opacity: 0.9;
+                }
+                75% {
+                    transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px);
+                    opacity: 0.6;
                 }
             }
+        `;
+        document.head.appendChild(style);
 
-            draw() {
-                // Glow effect (10 layers as per C#)
-                for (let i = 0; i < 5; i++) {
-                    ctx.beginPath();
-                    ctx.fillStyle = `rgba(255, 0, 0, ${0.1 - i * 0.02})`;
-                    ctx.arc(this.x, this.y, this.size + i * 4, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+        // Modal functions
+        function openModal() {
+            document.getElementById('paymentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-                // Triangle shape
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                ctx.beginPath();
-                ctx.moveTo(this.size * Math.cos(0), this.size * Math.sin(0));
-                ctx.lineTo(this.size * Math.cos(Math.PI * 2 / 3), this.size * Math.sin(Math.PI * 2 / 3));
-                ctx.lineTo(this.size * Math.cos(Math.PI * 4 / 3), this.size * Math.sin(Math.PI * 4 / 3));
-                ctx.closePath();
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.restore();
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
             }
-        }
+        });
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new TriangleParticle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        });
 
-        // --- Tabs Functionality ---
-        function showTab(evt, tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-btn');
-            
-            contents.forEach(c => c.classList.remove('active'));
-            buttons.forEach(b => b.classList.remove('active'));
+        // Initialize particles on load
+        window.addEventListener('load', createParticles);
 
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
-
-        // --- Music System ---
-        const audio = document.getElementById('audioSource');
-        const playBtn = document.getElementById('playBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-
-        playBtn.onclick = () => {
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerText = 'II';
-            } else {
-                audio.pause();
-                playBtn.innerText = '▶';
+        // Add parallax effect to hero
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
-        };
+        });
 
-        volumeSlider.oninput = (e) => {
-            audio.volume = e.target.value;
-        };
+        // Add payment method click handlers
+        document.querySelectorAll('.payment-method').forEach(button => {
+            button.addEventListener('click', function() {
+                const method = this.querySelector('span').textContent;
+                alert(`You selected ${method} as your payment method. Proceeding to checkout...`);
+                closeModal();
+            });
+        });
     </script>
 </body>
 </html>
